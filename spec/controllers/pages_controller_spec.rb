@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe PagesController do
+  render_views
 
   describe "GET 'home'" do
     it "returns http success" do
@@ -15,5 +16,18 @@ describe PagesController do
       response.should be_success
     end
   end
+  
+  describe "GET 'about'" do
+    it "returns http success" do
+      get 'about'
+      response.should be_success
+    end
+    
+    it "should not be empty" do
+      get 'about'
+      response.body.should_not =~ /<body>\s*<\/body>/
+    end
+  end
+  
 
 end

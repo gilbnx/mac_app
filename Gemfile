@@ -30,6 +30,7 @@ group :test do
   gem 'rspec'
 end
 
+gem 'spork', '~> 0.9.0.rc'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
