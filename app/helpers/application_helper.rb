@@ -4,9 +4,12 @@ module ApplicationHelper
   	base_title = "Gil's application"
   	if @title.nil?
   		base_title
-	else
-		"#{base_title} | #{@title}"
-	end
-  	
+    else
+    		"#{base_title} | #{@title}"
+    end
+  end
+
+  def logo
+    image_tag("sample-logo.png", alt: "Sample App", :class => "round")
   end
 end
