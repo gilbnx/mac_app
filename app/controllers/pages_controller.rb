@@ -9,6 +9,11 @@ class PagesController < ApplicationController
   
   def about
     @appText = "My App!"
+    @title = "About"
+  end
+
+  def help
+  	@title = "Help"  	
   end
   
 end
