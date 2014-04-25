@@ -1,7 +1,7 @@
 module ApplicationHelper
   # Return a title if it's missing
   def title
-  	base_title = "Gil's application"
+  	base_title = "PuffZpage"
   	if @title.nil?
   		base_title
     else
@@ -10,6 +10,6 @@ module ApplicationHelper
   end
 
   def logo
-    image_tag("sample-logo.png", alt: "Sample App", :class => "round")
+    image_tag("puffZ.png", alt: "PuffZpage", :class => "round")
   end
 end
