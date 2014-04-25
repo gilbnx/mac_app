@@ -2,11 +2,12 @@
 #
 # Table name: users
 #
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id                 :integer          not null, primary key
+#  name               :string(255)
+#  email              :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  encrypted_password :string(255)
 #
 
 require 'spec_helper'
@@ -14,12 +15,17 @@ require 'spec_helper'
 describe User do
 
 	before(:each) do
-		@attr = { name: "Gil", email: "gil@gil.com" }
+		@attr = { 
+      name: "Gil", 
+      email: "gil@gil.com", 
+      password: "password",
+      password_confirmation: "password"
+    }
 	end
   
-  it "should create a new instance given a valid attribute" do
-  	User.create!(name: "Example user", email: "User@example.com")
-  end
+  # it "should create a new instance given a valid attribute" do
+  # 	User.create!(name: "Example user", email: "User@example.com")
+  # end
 
   it "should require a name" do
   	no_name_user = User.new(@attr.merge(name: ""))
@@ -65,5 +71,69 @@ describe User do
     user_with_duplicate_email = User.new(@attr)
     user_with_duplicate_email.should_not be_valid
     
+  end
+end
+
+describe 'password' do
+  before(:each) do
+    @user = User.new(@attr)
+  end
+
+   it "should have a password attribute" do
+     User.new(@attr).should respond_to(:password)
+   end
+
+   it "should have a password confirmation attribute" do
+     @user.should respond_to(:password_confirmation) 
+   end
+end
+
+describe 'password validations' do
+
+  before(:each) do
+    @attr = { 
+      name: "Gil", 
+      email: "gil@gil.com", 
+      password: "password",
+      password_confirmation: "password"
+    }
+  end
+
+  it "should require a password" do
+    User.new(@attr.merge(password: "", password_confirmation: "")).
+    should_not be_valid
+  end
+
+  it "should require a password confirmation" do
+    User.new(@attr.merge(password_confirmation: "invalid")).
+    should_not be_valid
+  end
+
+  it "should reject short passwords" do
+    short = "a" * 5
+    hash = @attr.merge(password: short, password_confirmation: short)
+    User.new(hash).should_not be_valid
+  end
+
+  it "should reject long passwords" do
+    long = "a" * 41
+    hash = @attr.merge(password: long, password_confirmation: long)
+    User.new(hash).should_not be_valid
+  end
+end
+
+describe 'password encryption' do
+  before(:each) do
+    @attr = { 
+      name: "Gil", 
+      email: "gil@gil.com", 
+      password: "password",
+      password_confirmation: "password"
+    }
+    @user = User.create!(@attr)
+  end
+
+  it "should have an encrypted password attribute" do
+    @user.should respond_to(:encrypted_password)
   end
 end
