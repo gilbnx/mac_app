@@ -30,6 +30,7 @@ end
 group :test do
   gem 'rspec'
   gem 'webrat'
+  gem 'factory_girl_rails', '1.0'
 end
 
 gem 'spork', '~> 0.9.0.rc'
